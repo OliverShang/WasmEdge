@@ -4,6 +4,17 @@ cmake_minimum_required(VERSION 3.9.4)
 cmake_policy(SET CMP0091 NEW)
 project(WasmEdge)
 
+set(opentelemetry-cpp_DIR "/usr/local/lib/cmake/opentelemetry-cpp")
+find_package(opentelemetry-cpp CONFIG REQUIRED)
+
+# target_include_directories(foo PRIVATE ${OPENTELEMETRY_CPP_INCLUDE_DIRS})
+# target_link_libraries(foo PRIVATE ${OPENTELEMETRY_CPP_LIBRARIES})
+
+include_directories( ${OPENTELEMETRY_CPP_INCLUDE_DIRS}
+${OPENTELEMETRY_CPP_LIBRARY_DIRS})
+link_libraries(${OPENTELEMETRY_CPP_LIBRARIES})
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
 find_program(GIT_CMD git)
 execute_process(COMMAND
   ${GIT_CMD} describe --match "*[0-9].[0-9]*" --tag
